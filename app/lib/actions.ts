@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 
 import { z } from 'zod';
@@ -50,7 +51,7 @@ const RegisterUser = z.object({
 })
 
 export async function register(
-  prevState: string | null,
+  prevState: "Passwords don't match." | "Database Error: Failed to Create Account." | { errors: { name?: string[]; email?: string[]; password?: string[]; confirmPassword?: string[] }; message: string; } | null,
   formData: FormData,
 ) {
 
@@ -61,9 +62,11 @@ export async function register(
     confirmPassword: formData.get('confirm-password'),
   })
 
-  // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    return "Missing Fields. Failed to Create Account."
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Accout.',
+    };
   }
 
   const { name, email, password, confirmPassword } = validatedFields.data
