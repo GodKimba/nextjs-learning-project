@@ -1,2 +1,2 @@
-# nextjs-learning-project
+# Nextjs starter peoject
 
