@@ -1,2 +1,2 @@
-# Nextjs starter peoject
+# Nextjs starter project
 
